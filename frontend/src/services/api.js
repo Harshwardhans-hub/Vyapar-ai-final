@@ -2,23 +2,22 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || '';
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: API_URL,
-  headers: { 'Content-Type': 'application/json' },
   timeout: 30000,
 });
 
 // ─── JWT Token Management ────────────────────────────────────
 function getToken() {
-  return localStorage.getItem('seasonai_token');
+  return localStorage.getItem('vyapar_ai_token');
 }
 
 function setToken(token) {
-  localStorage.setItem('seasonai_token', token);
+  localStorage.setItem('vyapar_ai_token', token);
 }
 
 function clearToken() {
-  localStorage.removeItem('seasonai_token');
+  localStorage.removeItem('vyapar_ai_token');
 }
 
 // Attach token to every request if present
@@ -52,7 +51,7 @@ api.interceptors.response.use(
       clearToken();
     }
 
-    console.warn(`[SeasonAI API] ${apiError.code}: ${apiError.message}`);
+    console.warn(`[Vyapar AI] ${apiError.code}: ${apiError.message}`);
     return Promise.reject(apiError);
   }
 );
@@ -118,10 +117,10 @@ export const getCatalog = async (filters = {}) => {
 
 // ─── Session ID ──────────────────────────────────────────────
 function getSessionId() {
-  let sid = sessionStorage.getItem('seasonai_session');
+  let sid = sessionStorage.getItem('vyapar_ai_session');
   if (!sid) {
     sid = `ses_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
-    sessionStorage.setItem('seasonai_session', sid);
+    sessionStorage.setItem('vyapar_ai_session', sid);
   }
   return sid;
 }

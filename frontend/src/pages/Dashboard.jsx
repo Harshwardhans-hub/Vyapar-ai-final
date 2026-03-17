@@ -1,34 +1,25 @@
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { logout, getUser } from '../utils/auth'
 import { getCurrentSeason, getSeasonEmoji } from '../services/api'
 import DashboardOverview from '../dashboard/panels/DashboardOverview'
-import AnalyticsPanel from '../dashboard/panels/AnalyticsPanel'
-import PredictionPanel from '../dashboard/panels/PredictionPanel'
 import RecommendationPanel from '../dashboard/panels/RecommendationPanel'
 import VoicePanel from '../dashboard/panels/VoicePanel'
 import MapPanel from '../dashboard/panels/MapPanel'
+import ProductScannerPanel from '../dashboard/panels/ProductScannerPanel'
+import BusinessGuidePanel from '../dashboard/panels/BusinessGuidePanel'
 
 const navItems = [
-  { id: 'overview',        label: 'Dashboard',              icon: '🖥️' },
-  { id: 'analytics',       label: 'AI Analytics',           icon: '📊' },
-  { id: 'prediction',      label: 'Behavior Prediction',    icon: '🔮' },
+  { id: 'overview',        label: 'My Shop Dashboard',      icon: '🏪' },
+  { id: 'guide',           label: 'Business Startup Guide', icon: '🚀' },
+  { id: 'scanner',         label: 'Product Image Scanner',  icon: '📸' },
   { id: 'recommendations', label: 'AI Recommendations',     icon: '🎯' },
+  { id: 'map',             label: 'Wholesale Market Map',   icon: '🗺️' },
   { id: 'voice',           label: 'Voice Assistant',        icon: '🎙️' },
-  { id: 'map',             label: 'Local Business Map',     icon: '🗺️' },
 ]
 
-const panels = {
-  overview:        <DashboardOverview />,
-  analytics:       <AnalyticsPanel />,
-  prediction:      <PredictionPanel />,
-  recommendations: <RecommendationPanel />,
-  voice:           <VoicePanel />,
-  map:             <MapPanel />,
-}
-
 export default function Dashboard() {
-  const [active, setActive] = useState('overview')
+  const [active, setActive]           = useState('overview')
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const navigate = useNavigate()
   const user = getUser()
@@ -37,6 +28,15 @@ export default function Dashboard() {
   const handleLogout = () => {
     logout()
     navigate('/login')
+  }
+
+  const panels = {
+    overview:        <DashboardOverview onNavigate={setActive} />,
+    guide:           <BusinessGuidePanel />,
+    scanner:         <ProductScannerPanel />,
+    recommendations: <RecommendationPanel />,
+    map:             <MapPanel />,
+    voice:           <VoicePanel />,
   }
 
   return (
@@ -50,9 +50,9 @@ export default function Dashboard() {
         {/* Logo */}
         <div className="flex items-center gap-2 px-5 py-5 border-b border-white/10">
           <div className="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center">
-            <span className="text-white font-bold text-sm">S</span>
+            <span className="text-white font-bold text-sm">V</span>
           </div>
-          <span className="font-bold text-lg text-white">SeasonAI</span>
+          <span className="font-bold text-lg text-white">Vyapar AI</span>
           <span className="text-xs bg-white/10 text-indigo-200 px-2 py-0.5 rounded-full ml-auto">
             {getSeasonEmoji(season)}
           </span>
@@ -75,18 +75,6 @@ export default function Dashboard() {
             </button>
           ))}
         </nav>
-
-        {/* Quick links */}
-        <div className="px-3 py-2 border-t border-white/10">
-          <Link to="/recommend" className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-indigo-300 hover:bg-white/10 hover:text-white transition-colors">
-            <span className="text-lg">✨</span>
-            Full Recommendations
-          </Link>
-          <Link to="/voice-search" className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-indigo-300 hover:bg-white/10 hover:text-white transition-colors">
-            <span className="text-lg">🔍</span>
-            Voice Search
-          </Link>
-        </div>
 
         {/* User + logout */}
         <div className="px-4 py-4 border-t border-white/10">

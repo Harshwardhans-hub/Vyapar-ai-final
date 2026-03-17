@@ -1,5 +1,5 @@
 """
-SeasonAI Backend Configuration — Enhanced with security, caching, and JWT settings
+Vyapar AI Backend Configuration — Enhanced with security, caching, and JWT settings
 """
 import os
 import secrets
@@ -28,8 +28,10 @@ class Config:
     GEMINI_EMBEDDING_MODEL = "gemini-embedding-001"
     EMBEDDING_DIM = 768
 
-    # Gemini Chat Model (DO NOT CHANGE — tested & working)
-    GEMINI_MODEL = "gemini-2.5-flash"
+    # Gemini Models — ordered by preference
+    GEMINI_MODEL = "gemini-flash-lite-latest"
+    GEMINI_MODEL_FALLBACK = "gemini-2.5-flash-lite"
+    GEMINI_MODEL_VISION = "gemini-flash-lite-latest"  # Vision-capable model for image scanning
 
     # JWT Authentication
     JWT_SECRET = os.getenv("JWT_SECRET", secrets.token_hex(32))

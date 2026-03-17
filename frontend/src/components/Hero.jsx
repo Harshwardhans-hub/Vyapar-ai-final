@@ -17,15 +17,14 @@ export default function Hero() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
         <div>
           <span className="inline-block bg-white/10 text-indigo-200 text-xs font-semibold px-3 py-1 rounded-full mb-4 tracking-wide uppercase">
-            {getSeasonEmoji(season)} {season} Season • AI-Powered Platform
+            {getSeasonEmoji(season)} {season} Season • Made for Indian Shop Owners
           </span>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight">
-            Smarter Business<br />
-            <span className="text-indigo-300">Decisions with AI</span>
+            Grow Your Local<br />
+            <span className="text-indigo-300">Business with AI</span>
           </h1>
           <p className="mt-6 text-lg text-indigo-100 max-w-lg">
-            SeasonAI transforms your raw business data into actionable intelligence — predicting trends,
-            understanding customers, and driving growth with seasonal awareness.
+            Vyapar AI is your personal digital advisor. We help local shop owners and vendors find wholesale markets, decide what to stock for festivals, and get step-by-step guidance on growing your business.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Link to="/register"
@@ -38,7 +37,7 @@ export default function Hero() {
             </a>
           </div>
           <div className="mt-10 flex gap-8">
-            {[['10K+', 'Businesses'], ['98%', 'Accuracy'], ['3x', 'Revenue Growth']].map(([val, label]) => (
+            {[['1000+', 'Mandis & Maps'], ['Free', 'AI Advisor'], ['4 Seasons', 'Festival Ready']].map(([val, label]) => (
               <div key={label}>
                 <p className="text-2xl font-bold text-white">{val}</p>
                 <p className="text-sm text-indigo-200">{label}</p>
@@ -50,8 +49,8 @@ export default function Hero() {
         <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 shadow-2xl">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <p className="text-indigo-200 text-xs font-medium uppercase tracking-wide">Revenue Forecast</p>
-              <p className="text-white text-2xl font-bold mt-1">$2.4M <span className="text-green-400 text-sm font-medium">↑ 18%</span></p>
+              <p className="text-indigo-200 text-xs font-medium uppercase tracking-wide">{season} Sales Forecast</p>
+              <p className="text-white text-2xl font-bold mt-1">₹2.4L <span className="text-green-400 text-sm font-medium">↑ 18%</span></p>
             </div>
             <div className="w-10 h-10 rounded-lg bg-indigo-500/40 flex items-center justify-center">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,17 +68,17 @@ export default function Hero() {
               </defs>
               <Tooltip
                 contentStyle={{ background: '#1e1b4b', border: 'none', borderRadius: 8, color: '#fff', fontSize: 12 }}
-                formatter={(v) => [`$${v}K`, 'Revenue']}
+                formatter={(v) => [`₹${v}K`, 'Revenue']}
               />
               <Area type="monotone" dataKey="v" stroke="#a5b4fc" strokeWidth={2} fill="url(#heroGrad)" dot={false} />
             </AreaChart>
           </ResponsiveContainer>
           <div className="mt-4 grid grid-cols-3 gap-3">
-            {[['Customers', '24.5K', '+12%'], ['Conversions', '8.3%', '+2.1%'], ['Churn Risk', '3.2%', '-0.8%']].map(([label, val, delta]) => (
+            {[['Products Sold', '1,245', '+12%'], ['Walk-ins', '340', '+8%'], ['Online Orders', '189', '+24%']].map(([label, val, delta]) => (
               <div key={label} className="bg-white/10 rounded-xl p-3">
                 <p className="text-indigo-200 text-xs">{label}</p>
                 <p className="text-white font-bold text-sm mt-1">{val}</p>
-                <p className={`text-xs font-medium ${delta.startsWith('-') ? 'text-green-400' : 'text-green-400'}`}>{delta}</p>
+                <p className="text-green-400 text-xs font-medium">{delta}</p>
               </div>
             ))}
           </div>

@@ -4,10 +4,10 @@ import { isAuthenticated } from '../utils/auth'
 import { getCurrentSeason, getSeasonEmoji } from '../services/api'
 
 const navLinks = [
-  { label: 'Features', href: '#features' },
-  { label: 'Analytics', href: '#analytics' },
-  { label: 'Testimonials', href: '#testimonials' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Features',     href: '#features'     },
+  { label: 'Analytics',   href: '#analytics'    },
+  { label: 'Testimonials',href: '#testimonials' },
+  { label: 'Contact',     href: '#contact'      },
 ]
 
 export default function LandingNavbar() {
@@ -20,11 +20,11 @@ export default function LandingNavbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
         <Link to="/" className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center">
-            <span className="text-white font-bold text-sm">S</span>
+            <span className="text-white font-bold text-sm">V</span>
           </div>
-          <span className="font-bold text-xl text-brand-900">SeasonAI</span>
-          <span className="hidden sm:inline text-xs bg-brand-50 text-brand-600 px-2 py-0.5 rounded-full font-medium">
-            {getSeasonEmoji(season)} {season}
+          <span className="font-bold text-xl text-brand-900">Vyapar AI</span>
+          <span className="ml-1 text-[10px] bg-brand-100 text-brand-600 px-2 py-0.5 rounded-full font-bold">
+            🌸 {season}
           </span>
         </Link>
 
@@ -40,7 +40,7 @@ export default function LandingNavbar() {
         <div className="hidden md:flex items-center gap-3">
           {loggedIn ? (
             <Link to="/dashboard"
-              className="text-sm font-semibold bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition-colors">
+              className="flex items-center gap-2 text-sm font-semibold bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition-colors">
               Go to Dashboard
             </Link>
           ) : (

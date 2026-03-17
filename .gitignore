@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 venv/
 .env
+*.log
 
 # Node
 node_modules/
@@ -18,3 +19,7 @@ dist-ssr
 # OS
 .DS_Store
 Thumbs.db
+
+# Project Specific
+backend/test_*.py
+zeros.txt

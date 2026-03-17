@@ -2,13 +2,14 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, Send, X, Bot, User, Loader2 } from 'lucide-react';
 import { sendChatMessage } from '../services/api';
+import ReactMarkdown from 'react-markdown';
 
 export default function ChatInterface() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
       role: 'bot',
-      content: "Hey there! 👋 I'm SeasonAI, your local business guide. Ask me anything about local spots, seasonal specials, or recommendations!",
+      content: "Hey there! 👋 I'm Vyapar AI, your local business guide. Ask me anything about wholesale sourcing, seasonal products, or recommendations!",
     },
   ]);
   const [input, setInput] = useState('');
@@ -80,7 +81,7 @@ export default function ChatInterface() {
                   <Bot className="w-5 h-5 text-primary-400" />
                 </div>
                 <div>
-                  <p className="font-semibold text-white text-sm">SeasonAI Chat</p>
+                  <p className="font-semibold text-white text-sm">Vyapar AI Chat</p>
                   <p className="text-[10px] text-emerald-400 flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                     Online
@@ -110,7 +111,23 @@ export default function ChatInterface() {
                         : 'bg-white/5 text-white/80 border border-white/5 rounded-tl-sm'
                     }`}
                   >
-                    {msg.content}
+                    {msg.role === 'user' ? (
+                      msg.content
+                    ) : (
+                      <ReactMarkdown
+                        components={{
+                          p: ({node, ...props}) => <p className="mb-2 last:mb-0" {...props} />,
+                          ul: ({node, ...props}) => <ul className="list-disc ml-4 mb-2 space-y-1" {...props} />,
+                          ol: ({node, ...props}) => <ol className="list-decimal ml-4 mb-2 space-y-1" {...props} />,
+                          li: ({node, ...props}) => <li className="" {...props} />,
+                          h3: ({node, ...props}) => <h3 className="text-sm font-bold mt-2 mb-1 text-white" {...props} />,
+                          h4: ({node, ...props}) => <h4 className="text-sm font-bold mt-2 mb-1 text-white/90" {...props} />,
+                          strong: ({node, ...props}) => <strong className="font-bold text-white" {...props} />
+                        }}
+                      >
+                        {msg.content}
+                      </ReactMarkdown>
+                    )}
                   </div>
                   {msg.role === 'user' && (
                     <div className="w-7 h-7 rounded-full bg-accent-500/20 flex items-center justify-center shrink-0 mt-1">
@@ -140,8 +157,8 @@ export default function ChatInterface() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                  placeholder="Ask about local spots..."
-                  className="glass-input text-sm py-2.5"
+                  placeholder="Ask anything about business, products, sourcing..."
+                  className="glass-input text-sm py-2.5 text-white font-medium placeholder:text-zinc-400"
                 />
                 <motion.button
                   whileHover={{ scale: 1.1 }}

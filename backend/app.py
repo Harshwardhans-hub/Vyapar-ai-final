@@ -1,6 +1,6 @@
 """
-SeasonAI — Flask REST API Server (Enhanced v2)
-Upgrades: Caching, Rate Limiting, JWT Auth, Pagination, Error Handling, Security
+Vyapar AI — Flask REST API Server v2
+Features: Caching, Rate Limiting, JWT Auth, Pagination, Vector Search, Security
 """
 import os
 import sys
@@ -26,7 +26,7 @@ logging.basicConfig(
     level=logging.INFO if Config.FLASK_ENV == "production" else logging.DEBUG,
     format="%(asctime)s [%(levelname)s] %(message)s",
 )
-logger = logging.getLogger("SeasonAI")
+logger = logging.getLogger("VyaparAI")
 
 # ─── Initialize Flask App ───────────────────────────────────────
 app = Flask(__name__)
@@ -76,7 +76,7 @@ def internal_error(e):
 def health():
     """API health check with cache stats."""
     return jsonify({
-        "status": "✅ SeasonAI API is running",
+        "status": "✅ Vyapar AI API is running",
         "season": get_current_season(),
         "version": "2.0.0",
         "features": {
@@ -433,6 +433,58 @@ def chat():
         return jsonify({"error": str(e), "code": "CHAT_ERROR"}), 500
 
 
+# ─── POST /api/scan-product ──────────────────────────────────
+@app.route("/api/scan-product", methods=["POST"])
+@limiter.limit("20/hour")
+@optional_auth
+def scan_product():
+    """Scan a product image and get sourcing recommendations."""
+    try:
+        image_base64 = None
+        user_location = None
+
+        # Support multipart/form-data uploads AND JSON base64
+        if request.content_type and 'multipart' in request.content_type:
+            import base64
+            file = request.files.get('image')
+            if not file:
+                return jsonify({"error": "No image file uploaded", "code": "VALIDATION_ERROR"}), 400
+            raw_bytes = file.read()
+            image_base64 = base64.b64encode(raw_bytes).decode('utf-8')
+            user_location = request.form.get('location')
+        else:
+            data = request.get_json() or {}
+            image_base64 = data.get("image", "")
+            user_location = data.get("location")
+            if not image_base64:
+                return jsonify({"error": "Image data is required (base64)", "code": "VALIDATION_ERROR"}), 400
+            if "base64," in image_base64:
+                image_base64 = image_base64.split("base64,")[1]
+
+        if recommendation_service:
+            result = recommendation_service.analyze_product_image(image_base64, user_location)
+            # Map wholesale_sources -> sources for frontend compatibility
+            if 'wholesale_sources' in result and 'sources' not in result:
+                result['sources'] = [
+                    {
+                        'name': s.get('name', s.get('source_type', '')),
+                        'location': s.get('source_type', ''),
+                        'price': s.get('estimated_price', 'N/A'),
+                        'unit': s.get('tip', ''),
+                    }
+                    for s in result['wholesale_sources']
+                ]
+            if 'quality_tips' in result:
+                result['tips'] = result['quality_tips']
+            return jsonify(result), 200
+        else:
+            return jsonify({"error": "AI service not configured", "code": "SERVICE_ERROR"}), 503
+
+    except Exception as e:
+        logger.error(f"Product scan error: {e}")
+        return jsonify({"error": str(e), "code": "SCAN_ERROR"}), 500
+
+
 # ─── Cache admin ─────────────────────────────────────────────────
 @app.route("/api/admin/cache/clear", methods=["POST"])
 @require_auth
@@ -452,17 +504,16 @@ def clear_cache():
 if __name__ == "__main__":
     port = Config.PORT
     print(f"""
-╔══════════════════════════════════════════════════════╗
-║  🌿 SeasonAI API Server v2.0                        ║
-║  📍 http://localhost:{port}                           ║
-║  🌦️  Season: {get_current_season():<39}║
-║  🤖 Gemini: {'✅ Connected' if Config.GEMINI_API_KEY else '❌ Missing':<33}║
-║  📊 Supabase: {'✅ Connected' if Config.SUPABASE_URL else '❌ Missing':<31}║
-║  🔤 Embeddings: {'✅ Gemini' if Config.GEMINI_API_KEY else '❌ Missing':<30}║
-║  🔒 JWT Auth: ✅ Enabled                            ║
-║  ⏱️  Rate Limits: ✅ Active                          ║
-║  🗄️  Cache: ✅ In-Memory TTL                         ║
-║  📄 Pagination: ✅ Enabled                           ║
-╚══════════════════════════════════════════════════════╝
+======================================================
+   Vyapar AI API Server v2.0                       
+   http://localhost:{port}                           
+   Season: {get_current_season():<39}
+   Gemini: {' Connected' if Config.GEMINI_API_KEY else ' Missing':<33}
+   Supabase: {' Connected' if Config.SUPABASE_URL else ' Missing':<31}
+   JWT Auth:  Enabled                            
+   Rate Limits:  Active                          
+   Cache:  In-Memory TTL                         
+   Pagination:  Enabled                           
+======================================================
     """)
     app.run(host="0.0.0.0", port=port, debug=Config.DEBUG)

@@ -1,5 +1,5 @@
 {
-  "name": "seasonai-frontend",
+  "name": "vyapar-ai-frontend",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -9,13 +9,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-leaflet/core": "^2.1.0",
     "axios": "^1.7.9",
+    "firebase": "^12.10.0",
     "framer-motion": "^11.15.0",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.460.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-leaflet": "^5.0.0",
+    "react-leaflet": "^4.2.1",
+    "react-markdown": "^10.1.0",
     "react-router-dom": "^6.28.0",
     "recharts": "^2.15.0"
   },

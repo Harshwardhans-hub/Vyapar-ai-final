@@ -1,26 +1,26 @@
 const testimonials = [
   {
-    name: 'Sarah Chen',
-    role: 'VP of Growth, RetailCo',
-    avatar: 'SC',
+    name: 'Rahul Sharma',
+    role: 'Owner, Sharma General Store',
+    avatar: 'RS',
+    color: 'bg-orange-500',
+    quote: 'SeasonAI told me to stock umbrellas and raincoats two weeks before monsoon. I sold out in 3 days! Sales went up 40% compared to last year.',
+    rating: 5,
+  },
+  {
+    name: 'Priya Patel',
+    role: 'Owner, The Cozy Cafe',
+    avatar: 'PP',
     color: 'bg-pink-500',
-    quote: 'SeasonAI cut our customer churn by 40% in the first quarter. The prediction engine flagged at-risk accounts we never would have caught manually.',
+    quote: 'The AI recommended switching to iced drinks and fruit desserts for summer. My seasonal menu became the most popular in the area within a week.',
     rating: 5,
   },
   {
-    name: 'Marcus Williams',
-    role: 'CEO, FinTech Startup',
-    avatar: 'MW',
-    color: 'bg-blue-500',
-    quote: 'The AI voice assistant alone saves my team hours every week. I just ask "What drove last week\'s dip?" and get a full breakdown instantly.',
-    rating: 5,
-  },
-  {
-    name: 'Priya Nair',
-    role: 'Head of Analytics, LogiCorp',
-    avatar: 'PN',
+    name: 'Amit Kumar',
+    role: 'Manager, Fresh Mart Groceries',
+    avatar: 'AK',
     color: 'bg-emerald-500',
-    quote: 'We replaced three separate BI tools with SeasonAI. The unified dashboard and recommendation engine paid for itself in two months.',
+    quote: 'The business map feature brought 30% more foot traffic. Customers find our seasonal deals and drive straight to the store. Game changer!',
     rating: 5,
   },
 ]
@@ -36,9 +36,9 @@ export default function Testimonials() {
     <section id="testimonials" className="py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <span className="text-brand-600 font-semibold text-sm uppercase tracking-widest">Customer Stories</span>
+          <span className="text-brand-600 font-semibold text-sm uppercase tracking-widest">Success Stories</span>
           <h2 className="mt-2 text-3xl sm:text-4xl font-extrabold text-gray-900">
-            Trusted by teams that move fast
+            Local businesses growing with SeasonAI
           </h2>
         </div>
 
