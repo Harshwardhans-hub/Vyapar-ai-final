@@ -1,16 +1,5 @@
 import { useState } from 'react'
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { getCurrentSeason } from '../../services/api'
-
-const footfallData = [
-  { day: 'Mon', footfall: 120 },
-  { day: 'Tue', footfall: 145 },
-  { day: 'Wed', footfall: 110 },
-  { day: 'Thu', footfall: 160 },
-  { day: 'Fri', footfall: 195 },
-  { day: 'Sat', footfall: 240 },
-  { day: 'Sun', footfall: 210 },
-]
 
 const quickActions = [
   {
@@ -104,7 +93,7 @@ export default function DashboardOverview({ onNavigate }) {
       {/* Alerts + Footfall Chart */}
       <div className="grid lg:grid-cols-5 gap-6">
         {/* Mandi Market Alerts */}
-        <div className="lg:col-span-3 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <div className="lg:col-span-5 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-2">
             <span className="text-lg">🤖</span>
             <h3 className="font-bold text-gray-800">Local Mandi &amp; Market Alerts</h3>
@@ -120,21 +109,6 @@ export default function DashboardOverview({ onNavigate }) {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Footfall Chart */}
-        <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-          <h3 className="font-bold text-gray-800 mb-1">Expected Customer Footfall</h3>
-          <p className="text-xs text-gray-400 mb-4">Based on local area analysis</p>
-          <ResponsiveContainer width="100%" height={180}>
-            <BarChart data={footfallData} barSize={18}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f8fafc" vertical={false} />
-              <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94a3b8' }} />
-              <YAxis hide />
-              <Tooltip contentStyle={{ borderRadius: '10px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-              <Bar dataKey="footfall" fill="#6366f1" radius={[6, 6, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
         </div>
       </div>
     </div>
