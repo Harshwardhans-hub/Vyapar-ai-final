@@ -60,8 +60,7 @@
 | Embeddings | Google Gemini text-embedding-004 | Free |
 | Charts | Recharts | Free |
 | Voice | Web Speech API (Browser built-in) | Free |
-| Deploy (FE) | Vercel | Free |
-| Deploy (BE) | Railway | Free ($5 trial) |
+
 
 ## 🚀 Quick Start
 
@@ -144,6 +143,3 @@ The system automatically detects the current season and adjusts recommendations:
 - **Autumn** 🍂 — Harvest-based sourcing, festive prep
 - **Winter** ❄️ — Warm comfort services, holiday trade peaks
 
-## 📄 License
-
-MIT License — Free to use and modify for all entrepreneurs.
